@@ -1,0 +1,39 @@
+services:
+
+  # ── RTSP server ─────────────────────────────────────────────────────────
+  mediamtx:
+    image: bluenviron/mediamtx:latest
+    container_name: lab-camera
+    network_mode: host
+
+  # ── Video source ─────────────────────────────────────────────────────────
+  camera-source:
+    image: linuxserver/ffmpeg:latest
+    container_name: lab-camera-source
+    network_mode: host
+    depends_on:
+      - mediamtx
+    volumes:
+      - ~/iot-lab/camera_feed.mp4:/feed/camera_feed.mp4:ro
+    command: >
+      -re -stream_loop -1
+      -i /feed/camera_feed.mp4
+      -c copy
+      -f rtsp
+      rtsp://localhost:8554/cam
+
+  # ── MQTT broker ─────────────────────────────────────────────────────────
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: lab-mqtt
+    network_mode: host
+    volumes:
+      - ~/iot-lab/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  # ── Node-RED ────────────────────────────────────────────────────────────
+  nodered:
+    image: nodered/node-red
+    container_name: lab-nodered
+    network_mode: host
+    depends_on:
+      - mosquitto
