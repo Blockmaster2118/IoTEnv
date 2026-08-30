@@ -46,10 +46,10 @@ Kali Linux provides the primary security testing environment, including:
 ### IoT Services VM
 Ubuntu Desktop hosts the main IoT services using Docker:
 
-- **MediaMTX** — simulated RTSP IP camera
-- **Mosquitto** — deliberately insecure MQTT broker
-- **Node-RED** — smart-home dashboard
-- **Smart Light Simulator** — Python/Tkinter MQTT-controlled device
+- **MediaMTX** - simulated RTSP IP camera
+- **Mosquitto** - deliberately insecure MQTT broker
+- **Node-RED** - smart-home dashboard
+- **Smart Light Simulator** - Python/Tkinter MQTT-controlled device
 
 The camera feed and smart-light interface provide visible demonstrations of attacks against IoT services.
 
