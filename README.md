@@ -83,7 +83,7 @@ cd ~/iot-lab
 docker compose up -d
 
 python3 ~/iot-lab/smart_light.py &
-vlc rtsp://admin:12345@localhost:8554/cam --loop &
+ffplay -rtsp_transport tcp rtsp://127.0.0.1:8554/cam
 ```
 
 The Docker stack provides the RTSP and MQTT services, while the smart-light simulator provides a visible MQTT-controlled device.
@@ -110,3 +110,40 @@ The expected hosts are:
 ```
 
 Successful host discovery and service checks indicate that the lab is ready for penetration-testing exercises.
+
+## Attack Commands
+
+From the first sample attack, the successful attack commands are:
+
+Smart Light:
+```bash
+mosquitto_pub \
+  -h 192.168.50.20 \
+  -p 1883 \
+  -t home/livingroom/light/set \
+  -m OFF
+```
+
+_Note: the payload ('OFF') can be changed to turn the light on or change it's colour (either simple colours or hex codes)_
+
+Security Camera:
+```bash
+ffplay \
+  rtsp://admin:12345@192.168.50.20:8554/cam
+```
+
+## Credentials
+
+The precreated VM credentials. _Both users have ```sudo``` on respective machinces_
+
+Attacker:
+```
+Username: attacker
+Password: attacker
+```
+
+Target:
+```
+Username: target
+Password: target
+```

@@ -1,0 +1,521 @@
+┌──(glitch㉿Glitch)-[~]
+└─$ nmap -sn 192.168.50.0/24 -oN 01-host-discovery.txt
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-08-31 18:41 +1000
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Nmap scan report for 192.168.50.20
+Host is up (0.00061s latency).
+MAC Address: 00:0C:29:C4:2C:F0 (VMware)
+Nmap scan report for 192.168.50.10
+Host is up.
+Nmap done: 256 IP addresses (2 hosts up) scanned in 8.69 seconds
+
+┌──(glitch㉿Glitch)-[~]
+└─$ nmap -sV -sC -p- 192.168.50.20 -oN 02-iot-services.txt
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-08-31 18:42 +1000
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Stats: 0:01:05 elapsed; 0 hosts completed (1 up), 1 undergoing Script Scan
+NSE Timing: About 99.90% done; ETC: 18:43 (0:00:00 remaining)
+Nmap scan report for 192.168.50.20
+Host is up (0.0013s latency).
+Not shown: 65528 closed tcp ports (reset)
+PORT     STATE SERVICE                 VERSION
+1880/tcp open  vsat-control?
+| fingerprint-strings:
+|   DNSStatusRequestTCP, DNSVersionBindReqTCP, RPCCheck:
+|     HTTP/1.1 400 Bad Request
+|     Connection: close
+|   GetRequest:
+|     HTTP/1.1 200 OK
+|     Content-Type: text/html; charset=utf-8
+|     Content-Length: 1731
+|     ETag: W/"6c3-RnMuS9XN2u0UO+lOIlwZhlUr8OY"
+|     Date: Mon, 31 Aug 2026 08:42:49 GMT
+|     Connection: close
+|     <!DOCTYPE html>
+|     <html lang="en">
+|     <head>
+|     <meta charset="utf-8">
+|     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+|     <meta name="viewport" content="width=device-width, initial-scale=1">
+|     <meta name="apple-mobile-web-app-capable" content="yes">
+|     <meta name="mobile-web-app-capable" content="yes">
+|     <!--
+|     Copyright OpenJS Foundation and other contributors, https://openjsf.org/
+|     Licensed under the Apache License, Version 2.0 (the "License");
+|     you may not use this file except in compliance with the License.
+|     obtain a copy of the License at
+|     http://www.apache.org/licenses/LICENSE-2.0
+|     Unless required by applicable law or agreed to in writing, software
+|     |     distributed under the License is distributed on an
+|   HTTPOptions, RTSPRequest:
+|     HTTP/1.1 200 OK
+|     Allow: GET,HEAD
+|     Content-Type: text/html; charset=utf-8
+|     Content-Length: 8
+|     ETag: W/"8-ZRAf8oNBS3Bjb/SU2GYZCmbtmXg"
+|     Date: Mon, 31 Aug 2026 08:42:50 GMT
+|     Connection: close
+|     _    GET,HEAD
+1883/tcp open  mosquitto version 2.1.2
+| mqtt-subscribe:
+|   Topics and their most recent payloads:
+|     $SYS/broker/load/bytes/received/1min: 60.59
+|     $SYS/broker/load/publish/sent/5min: 14.91
+|     $SYS/broker/load/bytes/received/5min: 19.82
+|     $SYS/broker/load/bytes/received/15min: 12.48
+|     $SYS/broker/load/sockets/5min: 0.45
+|     $SYS/broker/publish/messages/sent: 275
+|     $SYS/broker/load/bytes/sent/5min: 670.13
+|     $SYS/broker/load/publish/dropped/5min: 0.00
+|     $SYS/broker/load/publish/received/1min: 0.00
+|     $SYS/broker/load/publish/dropped/15min: 0.00
+|     $SYS/broker/load/sockets/15min: 0.27
+|     $SYS/broker/load/messages/received/5min: 2.67
+|     $SYS/broker/heap/maximum: 870558
+|     $SYS/broker/load/publish/dropped/1min: 0.00
+|     $SYS/broker/load/messages/sent/5min: 17.03
+|     $SYS/broker/packet/out/bytes: 0
+|     $SYS/broker/clients/active: 3
+|     $SYS/broker/clients/maximum: 5
+|     $SYS/broker/publish/bytes/sent: 1026
+|     $SYS/broker/load/messages/sent/15min: 9.91
+|     $SYS/broker/clients/expired: 0
+|     $SYS/broker/publish/bytes/received: 0
+|     $SYS/broker/store/messages/count: 56
+|     $SYS/broker/packet/out/count: 0
+|     $SYS/broker/subscriptions/count: 8
+|     $SYS/broker/load/messages/received/1min: 4.18
+|     $SYS/broker/clients/disconnected: 2
+|     $SYS/broker/shared_subscriptions/count: 0
+|     $SYS/broker/load/publish/messages/dropped: 0.00
+|     $SYS/broker/load/publish/received/5min: 0.00
+|     $SYS/broker/bytes/sent: 10879
+|     $SYS/broker/load/publish/sent/15min: 8.06
+|     $SYS/broker/uptime: 1893 seconds
+|     $SYS/broker/load/bytes/sent/1min: 2581.38
+|     $SYS/broker/load/connections/5min: 0.45
+|     $SYS/broker/load/messages/received/15min: 1.99
+|_    $SYS/broker/load/sockets/1min: 1.39
+1935/tcp open  rtmp?
+8554/tcp open  http                    IDentifier NameTracer Pro httpd
+|_http-title: Site doesn't have a title.
+8888/tcp open  http                    Golang net/http server
+|_http-trane-info: Problem with XML parsing of /evox/about
+| fingerprint-strings:
+|   FourOhFourRequest:
+|     HTTP/1.0 302 Found
+|     Access-Control-Allow-Origin: *
+|     Location: /nice ports,/Trinity.txt.bak/
+|     Server: mediamtx
+|     Date: Mon, 31 Aug 2026 08:42:45 GMT
+|     Content-Length: 0
+|   GenericLines, Help, LPDString, LSCP, RTSPRequest, SIPOptions, SSLSessionReq, Socks5:
+|     HTTP/1.1 400 Bad Request
+|     Content-Type: text/plain; charset=utf-8
+|     Connection: close
+|     Request
+|   GetRequest:
+|     HTTP/1.0 404 Not Found
+|     Access-Control-Allow-Origin: *
+|     Content-Type: text/plain
+|     Server: mediamtx
+|     Date: Mon, 31 Aug 2026 08:42:44 GMT
+|     Content-Length: 18
+|     page not found
+|   HTTPOptions:
+|     HTTP/1.0 404 Not Found
+|     Access-Control-Allow-Origin: *
+|     Content-Type: text/plain
+|     Server: mediamtx
+|     Date: Mon, 31 Aug 2026 08:42:45 GMT
+|     Content-Length: 18
+|     page not found
+|_    Request: missing required Host header
+|_http-title: Site doesn't have a title (text/plain).
+|_http-server-header: mediamtx
+8889/tcp open  http                    Golang net/http server
+|_http-title: Site doesn't have a title (text/plain).
+| fingerprint-strings:
+|   FourOhFourRequest:
+|     HTTP/1.0 302 Found
+|     Access-Control-Allow-Origin: *
+|     Location: /nice ports,/Trinity.txt.bak/
+|     Server: mediamtx
+|     Date: Mon, 31 Aug 2026 08:43:04 GMT
+|     Content-Length: 0
+|   GenericLines, Help, JavaRMI, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, Socks5:
+|     HTTP/1.1 400 Bad Request
+|     Content-Type: text/plain; charset=utf-8
+|     Connection: close
+|     Request
+|   GetRequest, HTTPOptions:
+|     HTTP/1.0 404 Not Found
+|     Access-Control-Allow-Origin: *
+|     Content-Type: text/plain
+|     Server: mediamtx
+|     Date: Mon, 31 Aug 2026 08:42:49 GMT
+|     Connection: close
+|     Content-Length: 18
+|_    page not found
+|_http-server-header: mediamtx
+|_http-trane-info: Problem with XML parsing of /evox/about
+8892/tcp open  ssl/http                Golang net/http server
+|_ssl-date: TLS randomness does not represent time
+|_http-title: Site doesn't have a title (text/plain).
+| fingerprint-strings:
+|   FourOhFourRequest:
+|     HTTP/1.0 302 Found
+|     Access-Control-Allow-Origin: *
+|     Location: /nice ports,/Trinity.txt.bak/
+|     Server: mediamtx
+|     Date: Mon, 31 Aug 2026 08:43:10 GMT
+|     Content-Length: 0
+|   GenericLines, Help, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, Socks5:
+|     HTTP/1.1 400 Bad Request
+|     Content-Type: text/plain; charset=utf-8
+|     Connection: close
+|     Request
+|   GetRequest:
+|     HTTP/1.0 404 Not Found
+|     Access-Control-Allow-Origin: *
+|     Content-Type: text/plain
+|     Server: mediamtx
+|     Date: Mon, 31 Aug 2026 08:42:55 GMT
+|     Connection: close
+|     Content-Length: 18
+|     page not found
+|   OfficeScan:
+|     HTTP/1.1 400 Bad Request: missing required Host header
+|     Content-Type: text/plain; charset=utf-8
+|     Connection: close
+|     _    Request: missing required Host header
+|     _http-server-header: mediamtx
+| ssl-cert: Subject: commonName=mediamtx
+| Not valid before: 2026-08-28T01:45:20
+|_Not valid after:  2036-08-25T01:45:20
+|_http-server-header: mediamtx
+4 services unrecognized despite returning data. If you know the service/version, please submit the following fingerprints at https://nmap.org/cgi-bin/submit.cgi?new-service :
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port1880-TCP:V=7.99%I=7%D=8/31%Time=6A953E8A%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,777,"HTTP/1\.1\x20200\x20OK\r\nContent-Type:\x20text/html;\x20
+SF:charset=utf-8\r\nContent-Length:\x201731\r\nETag:\x20W/\"6c3-RnMuS9XN2u
+SF:0UO\+lOIlwZhlUr8OY\"\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:42:49\
+SF:x20GMT\r\nConnection:\x20close\r\n\r\n<!DOCTYPE\x20html>\n<html\x20lang
+SF:=\"en\">\n<head>\n<meta\x20charset=\"utf-8\">\n<meta\x20http-equiv=\"X-
+SF:UA-Compatible\"\x20content=\"IE=edge\">\n<meta\x20name=\"viewport\"\x20
+SF:content=\"width=device-width,\x20initial-scale=1\">\n<meta\x20name=\"ap
+SF:ple-mobile-web-app-capable\"\x20content=\"yes\"\n<!--
+|     Copyright OpenJS Foundation and other contributors, https://openjsf.org/
+|     Licensed under the Apache License, Version 2.0 (the "License");
+|     you may not use this file except in compliance with the License.
+|     obtain a copy of the License at
+|     http://www.apache.org/licenses/LICENSE-2.0
+|     Unless required by applicable law or agreed to in writing, software
+|     |     distributed under the License is distributed on an
+SF:icense");
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8888-TCP:V=7.99%I=7%D=8/31%Time=6A953E85%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,B1,"HTTP/1\.0\x20404\x20Not\x20Found\r\nAccess-Control-Allow-O
+SF:rigin:\x20\*\r\nContent-Type:\x20text/plain\r\nServer:\x20mediamtx\r\nD
+SF:ate:\x20Mon,\x2031\x20Aug\x202026\x2008:42:44\x20GMT\r\nContent-Length:
+SF:\x2018\r\n\r\n404\x20page\x20not\x20found")%r(HTTPOptions,B1,"HTTP/1\.0
+SF:404\x20Not\x20Found\r\nAccess-Control-Allow-Origin:\x20\*\r\nConten
+SF:t-Type:\x20text/plain\r\nServer:\x20mediamtx\r\nDate:\x20Mon,\x2031\x20
+SF:Aug\x202026\x2008:42:45\x20GMT\r\nContent-Length:\x2018\r\n\r\n404\x20p
+SF:age\x20not\x20found")%r(FourOhFourRequest,A9,"HTTP/1\.0\x20302\x20Found
+SF:\r\nAccess-Control-Allow-Origin:\x20\*\r\nLocation:\x20/nice\x20ports,/
+SF:Trinity\.txt\.bak/\r\nServer:\x20mediamtx\r\nDate:\x20Mon,\x2031\x20Aug
+SF:2026\x2008:42:45\x20GMT\r\nContent-Length:\x200\r\n\r\n")%r(LSCP,67
+SF:,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x2
+SF:0charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r
+SF:(GenericLines,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x
+SF:20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Ba
+SF:d\x20Request")%r(RTSPRequest,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\n
+SF:Content-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r
+SF:\n\r\n400\x20Bad\x20Request")%r(Help,67,"HTTP/1\.1\x20400\x20Bad\x20Req
+SF:uest\r\nContent-Type:\x20text/plain;\x2
+SF:0charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r
+SF:(SSLSessionReq,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x
+SF:text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad
+SF:Request")%r(LPDString,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent
+SF:-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n4
+SF:00\x20Bad\x20Request")%r(SIPOptions,67,"HTTP/1\.1\x20400\x20Bad\x20Request
+SF:\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(Socks5,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(OfficeScan,A3,"HTTP/1\.1\x20400\x20Bad\x20Request:\x20missing\x20required\x20Host\x20header\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request");
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8889-TCP:V=7.99%I=7%D=8/31%Time=6A953E88%P=x86_64-pc-linux-gnu%r(Ja
+SF:vaRMI,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/p
+SF:lain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Req
+SF:uest")%r(GenericLines,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent
+SF:-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n4
+SF:00\x20Bad\x20Request")%r(GetRequest,B1,"HTTP/1\.0\x20404\x20Not\x20Found
+SF:\r\nAccess-Control-Allow-Origin:\x20\*\r\nContent-Type:\x20text/plain\
+SF:r\nServer:\x20mediamtx\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:42:4
+SF:9\x20GMT\r\nContent-Length:\x2018\r\n\r\n404\x20page\x20not\x20found")%
+SF:r(HTTPOptions,B1,"HTTP/1\.0\x20404\x20Not\x20Found\r\nAccess-Control-Al
+SF:low-Origin:\x20\*\r\nContent-Type:\x20text/plain\r\nServer:\x20mediamtx
+SF:\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:42:49\r\nContent-Length:\x2018\r\n\r\n404\x20page\x20not\x20found")%r(RTSPRequest,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(Help,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(SSLSessionReq,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(FourOhFourRequest,A9,"HTTP/1\.0\x20302\x20Found\r\nAccess-Control-Allow-Origin:\x20\*\r\nLocation:\x20/nice\x20ports,/Trinity\.txt.bak/\r\nServer:\x20mediamtx\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:43:04 GMT\r\nContent-Length:\x200\r\n\r\n")%r(LPDString,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(SIPOptions,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(Socks5,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(OfficeScan,A3,"HTTP/1\.1\x20400\x20Bad\x20Request:\x20missing\x20required\x20Host\x20header\r\nContent-Type:\x20text/plain\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request");
+==============NEXT SERVICE FINGERPRINT (SUBMIT INDIVIDUALLY)==============
+SF-Port8892-TCP:V=7.99%T=SSL%I=7%D=8/31%Time=6A953E8F%P=x86_64-pc-linux-gn
+SF:u%r(GenericLines,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type
+SF::\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x2
+SF:0Bad\x20Request")%r(GetRequest,B1,"HTTP/1\.0\x20404\x20Not\x20Found\r\n
+SF:Access-Control-Allow-Origin:\x20\*\r\nContent-Type:\x20text/plain\r\nSe
+SF:rver:\x20mediamtx\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:42:55\x20
+SF:GMT\r\nContent-Length:\x2018\r\n\r\n404\x20page\x20not\x20found")%r(HTT
+SF:POptions,B1,"HTTP/1\.0\x20404\x20Not\x20Found\r\nAccess-Control-Allow-O
+SF:rigin:\x20\*\r\nContent-Type:\x20text/plain\r\nServer:\x20mediamtx\r\nD
+SF:ate:\x20Mon,\x2031\x20Aug\x202026\x2008:42:55 GMT\r\nContent-Length:\x2018\r\n\r\n404\x20page\x20not\x20found")%r(RTSPRequest,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(Help,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(SSLSessionReq,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(FourOhFourRequest,A9,"HTTP/1\.0\x20302\x20Found\r\nAccess-Control-Allow-Origin:\x20\*\r\nLocation:\x20/nice\x20ports,/Trinity\.txt.bak/\r\nServer:\x20mediamtx\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:43:10 GMT\r\nContent-Length:\x200\r\n\r\n")%r(LPDString,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(SIPOptions,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(Socks5,67,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request")%r(OfficeScan,A3,"HTTP/1\.1\x20400\x20Bad\x20Request:\x20missing\x20required\x20Host\x20header\r\nContent-Type:\x20text/plain\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request");
+MAC Address: 00:0C:29:C4:2C:F0 (VMware)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 69.88 seconds
+
+┌──(glitch㉿Glitch)-[~]
+└─$ nmap -sV -p 1883,1880,8554 192.168.50.20
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-08-31 18:43 +1000
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Nmap scan report for 192.168.50.20
+Host is up (0.00077s latency).
+
+PORT     STATE SERVICE                 VERSION
+1880/tcp open  vsat-control?
+1883/tcp open  mosquitto version 2.1.2
+8554/tcp open  http                    IDentifier NameTracer Pro httpd
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port1880-TCP:V=7.99%I=7%D=8/31%Time=6A953ED8%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,777,"HTTP/1\.1\x20200\x20OK\r\nContent-Type:\x20text/html;\x20
+SF:charset=utf-8\r\nContent-Length:\x201731\r\nETag:\x20W/\"6c3-RnMuS9XN2u
+SF:0UO\+lOIlwZhlUr8OY\"\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:44:08\
+SF:x20GMT\r\nConnection:\x20close\r\n\r\n<!DOCTYPE html>\n<html lang
+SF:=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<meta http-equiv=\"X-
+SF:UA-Compatible\"\x20content=\"IE=edge\">\n<meta name=\"viewport\"\x20
+SF:content=\"width=device-width,\x20initial-scale=1\">\n<meta name=\"ap
+SF:ple-mobile-web-app-capable\"\x20content=\"yes\"\n<!--
+SF:x20 Unless\x20required\x20by\x20applicable\x20law,\x20software
+SF:x20distributed\x20under\x20the\x20License\x20is\x20distributed\x20on\x20an\x20")%r(HTTPOptions,C8,"HTTP/1\.1\x20200\x20OK\r\nAllow:\x20GET,HEAD
+SF:Content-Type:\x20text/html;\x2
+SF:0charset=utf-8\r\nContent-Length:\x208
+SF:ETag:\x20W/\"8-ZRAf8oNBS3Bjb/SU2GYZCmbtmXg\"\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:44:08\x20GM
+SF:T\r\nConnection:\x20close\r\n\r\nGET,HEAD")%r(RTSPRequest,C8,"HTTP/1\.1
+SF:\x20200\x20OK\r\nAllow:\x20GET,HEAD\r\nContent-Type:\x20text/html;\x2
+SF:0charset=utf-8\r\nContent-Length:\x208\r\nETag:\x20W/\"8-ZRAf8oNBS3Bjb/SU2GYZCmbtmXg\"\r\nDate:\x20Mon,\x2031\x20Aug\x202026\x2008:44:08\x20GMT\r\nConnection:\x20close\r\n\r\nGET,HEAD")%r(RPCCheck,2F,"HTTP/1\.1\x204
+SF:00\x20Bad Request\r\nConnection:\x20close\r\n\r\n")%r(DNSVersionBindReqTCP,2F,"HTTP/1\.1\x20400\x20Bad Request\r\nConnection:\x20close\r\n\r\n")%r(DNSStatusRequestTCP,2F,"HTTP/1\.1\x20400\x20Bad Request\r\nConnection:\x20close\r\n\r\n");
+MAC Address: 00:0C:29:C4:2C:F0 (VMware)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 20.25 seconds
+
+┌──(glitch㉿Glitch)-[~]
+└─$ mosquitto_sub -h 192.168.50.20 -p 1883 -t '#' -v
+
+^C
+┌──(glitch㉿Glitch)-[~]
+└─$ mosquitto_pub \
+-h 192.168.50.20 \
+-p 1883 \
+-t home/livingroom/light/set \
+-m OFF
+
+home/livingroom/light/set OFF
+┌──(glitch㉿Glitch)-[~]
+└─$ mosquitto_pub \
+-h 192.168.50.20 \
+-p 1883 \
+-t home/livingroom/light/set \
+-m ON
+home/livingroom/light/set ON
+
+┌──(glitch㉿Glitch)-[~]
+└─$ sudo tcpdump -i eth0 -nn -A tcp port 1883
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+18:57:46.405833 IP 192.168.50.10.43026 > 192.168.50.20.1883: Flags [P.], seq 2415291925:2415291927, ack 2182703888, win 126, options [nop,nop,TS val 4251347196 ecr 3162290463], length 2
+E..6.6@.@.....2
+..2....[..n...k....~.......
+.fh..|....
+18:57:46.406875 IP 192.168.50.20.1883 > 192.168.50.10.43026: Flags [P.], seq 1:3, ack 2, win 128, options [nop,nop,TS val 3162350753 ecr 4251347196], length 2
+E..6.I@.@..     ..2...2
+.[....k...n.....^......
+.}...fh...
+18:57:46.406906 IP 192.168.50.10.43026 > 192.168.50.20.1883: Flags [.], ack 3, win 126, options [nop,nop,TS val 4251347198 ecr 3162350753], length 0
+E..4.7@.@.....2
+..2....[..n...k....~.......
+.fh..}..
+home/livingroom/light/set OFF
+18:58:21.109651 IP 192.168.50.10.47960 > 192.168.50.20.1883: Flags [S], seq 1217176497, win 64240, options [mss 1460,sackOK,TS val 4056010997 ecr 0,nop,wscale 9], length 0
+18:58:21.110259 IP 192.168.50.20.1883 > 192.168.50.10.47960: Flags [S.], seq 548352621, ack 1217176498, win 65160, options [mss 1460,sackOK,TS val 4080954273 ecr 4056010997,nop,wscale 9], length 0
+18:58:21.110308 IP 192.168.50.10.47960 > 192.168.50.20.1883: Flags [.], ack 1, win 126, options [nop,nop,TS val 4056010998 ecr 4080954273], length 0
+18:58:21.112171 IP 192.168.50.10.47960 > 192.168.50.20.1883: Flags [P.], seq 1:15, ack 1, win 126, options [nop,nop,TS val 4056011000 ecr 4080954273], length 14
+E..BQ.@.@..\..2
+..2..X.[H... .2nH.......~.......
+.....>k.....MQTT...<..
+18:58:21.112754 IP 192.168.50.20.1883 > 192.168.50.10.47960: Flags [.], ack 15, win 128, options [nop,nop,TS val 4080954275 ecr 4056011000], length 0
+E..4f.@.@.....2...2
+.[.X .2nH.......m......
+.>k.....
+18:58:21.112998 IP 192.168.50.20.1883 > 192.168.50.10.47960: Flags [P.], seq 1:5, ack 15, win 128, options [nop,nop,TS val 4080954276 ecr 4056011000], length 4
+E..8f.@.@.....2...2
+.[.X .2nH.......M......
+.>k..... ...
+18:58:21.113031 IP 192.168.50.10.47960 > 192.168.50.20.1883: Flags [.], ack 5, win 126, options [nop,nop,TS val 4251347198 ecr 3162350753], length 0
+E..4Q.@.@..i..2
+..2..X.[H...k....~.......
+.fh..}..
+18:58:21.113499 IP 192.168.50.10.47960 > 192.168.50.20.1883: Flags [P.], seq 15:47, ack 5, win 126, options [nop,nop,TS val 4080954276 ecr 4056011000], length 32
+E..TQ.@.@..H..2
+..2..X.[H... .2rH.......~.......
+.....>k.0...home/livingroom/light/setOFF
+18:58:21.113695 IP 192.168.50.10.47960 > 192.168.50.20.1883: Flags [FP.], seq 47:49, ack 5, win 126, options [nop,nop,TS val 4080954276 ecr 4056011000], length 2
+E..6Q.@.@..e..2
+..2..X.[H... .2rH.......~.......
+.....>k...
+18:58:21.114322 IP 192.168.50.20.1883 > 192.168.50.10.43026: Flags [P.], seq 3:35, ack 2, win 128, options [nop,nop,TS val 3162385458 ecr 4251381905], length 32
+E..T.J@.@.....2...2
+.[....k2..n......}.....
+.~,2.fh.0...home/livingroom/light/setOFF
+18:58:21.114323 IP 192.168.50.20.1883 > 192.168.50.10.47960: Flags [.], ack 50, win 128, options [nop,nop,TS val 4080954277 ecr 4056011001], length 0
+E..4f.@.@.....2...2
+.[.X .2rH.......l......
+.>k.....
+18:58:21.114359 IP 192.168.50.10.43026 > 192.168.50.20.1883: Flags [.], ack 35, win 126, options [nop,nop,TS val 4251381905 ecr 3162385458], length 0
+E..4.8@.@.....2
+..2....[..n...k2...~.......
+.g...~,2
+18:58:21.114609 IP 192.168.50.20.1883 > 192.168.50.10.47960: Flags [F.], seq 5, ack 50, win 128, options [nop,nop,TS val 4080954277 ecr 4056011001], length 0
+E..4f.@.@.....2...2
+.[.X .2rH.......l......
+.>k.....
+18:58:21.114638 IP 192.168.50.10.47960 > 192.168.50.20.1883: Flags [.], ack 6, win 126, options [nop,nop,TS val 4056011002 ecr 4080954277], length 0
+E..4..@.@.UU..2
+..2..X.[H... .2s...~l......
+.....>k.
+home/livingroom/light/set ON
+18:58:25.090294 IP 192.168.50.10.36426 > 192.168.50.20.1883: Flags [S], seq 2853585086, win 64240, options [mss 1460,sackOK,TS val 1346724092 ecr 0,nop,wscale 9], length 0
+18:58:25.091147 IP 192.168.50.20.1883 > 192.168.50.10.36426: Flags [S.], seq 3313825923, ack 2853585087, win 65160, options [mss 1460,sackOK,TS val 443726888 ecr 1346724092,nop,wscale 9], length 0
+18:58:25.091244 IP 192.168.50.10.36426 > 192.168.50.20.1883: Flags [.], ack 1, win 126, options [nop,nop,TS val 1346724093 ecr 443726888], length 0
+18:58:25.092064 IP 192.168.50.10.36426 > 192.168.50.20.1883: Flags [P.], seq 1:15, ack 1, win 126, options [nop,nop,TS val 1346724094 ecr 443726888], length 14
+E..Bn0@.@.....2
+..2..J.[..@........~.......
+PE`..r.(....MQTT...<..
+18:58:25.092859 IP 192.168.50.20.1883 > 192.168.50.10.36426: Flags [.], ack 15, win 128, options [nop,nop,TS val 443726890 ecr 1346724094], length 0
+E..46.@.@..E..2...2
+.[.J......@......Z.....
+.r.*PE`.
+18:58:25.093472 IP 192.168.50.20.1883 > 192.168.50.10.36426: Flags [P.], seq 1:5, ack 15, win 128, options [nop,nop,TS val 443726891 ecr 1346724094], length 4
+E..86.@.@..E..2...2
+.[.J......@......K.....
+.r.+PE`. ...
+18:58:25.093533 IP 192.168.50.10.36426 > 192.168.50.20.1883: Flags [.], ack 5, win 126, options [nop,nop,TS val 1346724095 ecr 443726891], length 0
+E..4n1@.@..#..2
+..2..J.[..@........~.......
+PE`..r.+
+18:58:25.093631 IP 192.168.50.10.36426 > 192.168.50.20.1883: Flags [P.], seq 15:46, ack 5, win 126, options [nop,nop,TS val 1346724095 ecr 443726891], length 31
+E..Sn2@.@.....2
+..2..J.[..@........~.......
+PE`..r.+0...home/livingroom/light/setON
+18:58:25.093718 IP 192.168.50.10.36426 > 192.168.50.20.1883: Flags [FP.], seq 46:48, ack 5, win 126, options [nop,nop,TS val 1346724095 ecr 443726891], length 2
+E..6n3@.@.....2
+..2..J.[..@........~.......
+PE`..r.+..
+18:58:25.094571 IP 192.168.50.20.1883 > 192.168.50.10.36426: Flags [.], ack 49, win 128, options [nop,nop,TS val 443726892 ecr 1346724095], length 0
+E..46.@.@..G..2...2
+.[.J......@......0.....
+.r.,PE`.
+18:58:25.094734 IP 192.168.50.20.1883 > 192.168.50.10.43026: Flags [P.], seq 35:66, ack 2, win 128, options [nop,nop,TS val 4251385885 ecr 3162389438], length 31
+E..S.K@.@.....2...2
+.[....k2..n.....E......
+.~;..f..0...home/livingroom/light/setON
+18:58:25.094735 IP 192.168.50.20.1883 > 192.168.50.10.36426: Flags [F.], seq 5, ack 49, win 128, options [nop,nop,TS val 443726892 ecr 1346724095], length 0
+E..46.@.@..G..2...2
+.[.J......@......0.....
+.r.,PE`.
+18:58:25.094758 IP 192.168.50.10.43026 > 192.168.50.20.1883: Flags [.], ack 66, win 126, options [nop,nop,TS val 4251385885 ecr 3162389438], length 0
+E..4.9@.@.....2
+..2....[..n...kQ...~.......
+.g...~;.
+18:58:25.094812 IP 192.168.50.10.36426 > 192.168.50.20.1883: Flags [.], ack 6, win 126, options [nop,nop,TS val 1346724096 ecr 443726892], length 0
+E..4..@.@.UU..2
+..2..J.[..@........~.1.....
+PEa..r.,
+^C
+31 packets captured
+31 packets received by filter
+0 packets dropped by kernel
+
+┌──(glitch㉿Glitch)-[~]
+└─$ nmap -sV -p 8554 192.168.50.20
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-08-31 18:58 +1000
+mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers
+Nmap scan report for 192.168.50.20
+Host is up (0.00075s latency).
+
+PORT     STATE SERVICE VERSION
+8554/tcp open  http    IDentifier NameTracer Pro httpd
+MAC Address: 00:0C:29:C4:2C:F0 (VMware)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 11.56 seconds
+
+┌──(glitch㉿Glitch)-[~]
+└─$ ffprobe \
+rtsp://admin:12345@192.168.50.20:8554/cam
+ffprobe version 8.1.2-2+b3 Copyright (c) 2007-2026 the FFmpeg developers
+built with gcc 16 (Debian 16.1.0-3)
+configuration: --prefix=/usr --extra-version=2+b3 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-pocketsphinx --disable-libcaca --disable-libmfx --disable-omx --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-libjxl --enable-libpulse --enable-librabbitmq --enable-librist --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --disable-sndio --enable-libvpl --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-libopengl --disable-sndio --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libplacebo --enable-libpulse --enable-librabbitmq --enable-librist --enable-libshine --enable-libsrt --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libdvdnav --enable-libplacebo --enable-librav1e --enable-librsvg --enable-shared
+libavutil      60. 26.102 / 102. 12.102
+libavcodec     62. 28.102 / 62. 28.102
+libavformat     62. 12.102 / 62. 12.102
+libavdevice     62. 3.102 / 62. 3.102
+libavfilter     11. 14.102 / 11. 14.102
+libswscale     9. 5.102 / 9. 5.102
+libswresample     6. 3.102 / 6. 3.102
+Input #0, rtsp, from 'rtsp://admin:12345@192.168.50.20:8554/cam':
+Metadata:
+title           : No Name
+Duration: N/A, start: 0.130431, bitrate: N/A
+Stream #0:0: Video: h264 (Main), yuv420p(tv, smpte170m/bt470bg/bt709, progressive), 640x360 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 90k tbn, start 0.134767
+Stream #0:1: Audio: aac (LC), 44100 Hz, stereo, fltp, start 0.130431
+
+┌──(glitch㉿Glitch)-[~]
+└─$ ffplay \
+rtsp://admin:12345@192.168.50.20:8554/cam
+ffplay version 8.1.2-2+b3 Copyright (c) 2003-2026 the FFmpeg developers
+built with gcc 16 (Debian 16.1.0-3)
+configuration: --prefix=/usr --extra-version=2+b3 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --disable-pocketsphinx --disable-libcaca --disable-libmfx --disable-omx --enable-gnutls --enable-libaom --enable-libass --enable-libbs2b --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libharfbuzz --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-openal --enable-opencl --enable-opengl --disable-sndio --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-libiec61883 --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-ladspa --enable-libbluray --enable-libdvdnav --enable-libplacebo --enable-librav1e --enable-librsvg --enable-shared
+libavutil      60. 26.102 / 60. 26.102
+libavcodec     62. 28.102 / 62. 28.102
+libavformat     62. 12.102 / 62. 12.102
+libavdevice     62. 3.102 / 62. 3.102
+libavfilter     11. 14.102 / 11. 14.102
+libswscale     9. 5.102 / 9. 5.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libswresample     6. 3.102 / 6. 3.102
+libavutil     60. 26.102 / 60. 26.102
+libavcodec     62. 28.102 / 62. 28.102
+libavformat     62. 12.102 / 62. 12.102
+libavdevice     62. 3. 102 / 62. 3. 102
+libavfilter     11. 14. 102 / 11. 14. 102
+libswscale     9. 5. 102 / 9. 5. 102
+libswresample     6. 3. 102 / 6. 3. 102
+Input #0, rtsp, from 'rtsp://admin:12345@192.168.50.20:8554/cam':
+Metadata:
+title           : No Name
+Duration: N/A, start: 0.103356, bitrate: N/A
+Stream #0:0: Video: h264 (Main), yuv420p(tv, smpte170m/bt470bg/bt709, progressive), 640x360 [SAR 1:1 DAR 16:9], 30 fps, 30 tbr, 90k tbn, start 0.114267
+Stream #0:1: Audio: aac (LC), 44100 Hz, stereo, fltp, start 0.103356
+^C
+┌──(glitch㉿Glitch)-[~]
+└─$
