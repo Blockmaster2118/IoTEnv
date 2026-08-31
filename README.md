@@ -134,7 +134,7 @@ ffplay \
 
 ## Credentials
 
-The precreated VM credentials. _Both users have ```sudo``` on respective machinces_
+The precreated VM credentials. 
 
 Attacker:
 ```
@@ -147,3 +147,5 @@ Target:
 Username: target
 Password: target
 ```
+
+_Note: Both users have ```sudo``` on respective machines_
