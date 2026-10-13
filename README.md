@@ -55,6 +55,18 @@ Ubuntu Desktop hosts the main IoT services using Docker:
 
 The camera feed, smart-light and smart-vacuum interface provide visible demonstrations of attacks against IoT services.
 
+#### Camera View:
+
+![Camera View](./Images/camera_view.png)
+
+#### Vacuum View:
+
+![Vacuum View](./Images/vacuum_view.png)
+
+#### Light View: 
+
+![Light View](./Images/light_view.png)
+
 ### IoT Lock VM
 Debian hosts:
 
