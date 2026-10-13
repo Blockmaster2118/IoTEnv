@@ -31,6 +31,8 @@ All VMs communicate through the isolated VMware LAN Segment:
 
 The lab network is intentionally isolated from the host's real LAN and the Internet.
 
+![Home View](./Images/current_home.png)
+
 ## Components
 
 ### Attacker VM
