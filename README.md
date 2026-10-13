@@ -4,7 +4,7 @@ A self-contained, isolated IoT security testing environment designed for demonst
 
 The lab uses intentionally vulnerable IoT services and simulated devices, including an RTSP camera, MQTT smart light, MQTT smart Vacuum and BLE smart lock. Everything runs inside VMware and is isolated from real networks.
 
-_(NOTE: The lock simulator is not yet implimented)_
+_(NOTE: The lock simulator is not yet implemented)_
 
 ## Architecture
 
@@ -185,7 +185,7 @@ _(NOTE: speeds include: `SLOW`, `NORMAL`, `FAST`)_
 
 ## Credentials
 
-The precreated VM credentials. 
+The pre-created VM credentials. 
 
 Attacker:
 ```
