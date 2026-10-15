@@ -16,14 +16,14 @@ All VMs communicate through the isolated VMware LAN Segment:
 ```text
                     iotlab LAN Segment
                            |
-                 ┌─────────┴─────────┐
-                 |                   |
-            Kali Linux          IoT Services
-           192.168.50.10       192.168.50.20
-                 |                   |
-              Attacker        ┌──────┼────────┐
-               Tools          |      |        |
-                             RTSP   MQTT   Smart Lock
+                 ┌─────────┴──────────┐
+                 |                    |
+            Kali Linux           IoT Services
+           192.168.50.10        192.168.50.20
+                 |                    |
+              Attacker        ┌───────┼────────┐
+               Tools          |       |        |
+                             RTSP    MQTT   Smart Lock
                             Camera  Broker  TCP :9999
                                       |
                                 ┌─────┴─────┐
