@@ -4,15 +4,12 @@ A self-contained, isolated IoT security testing environment designed for demonst
 
 The lab uses intentionally vulnerable IoT services and simulated devices, including an RTSP camera, MQTT smart light, MQTT smart Vacuum and BLE smart lock. Everything runs inside VMware and is isolated from real networks.
 
-_(NOTE: The lock simulator is not yet implemented)_
-
 ## Architecture
 
 | VM | OS | IP | Purpose |
 |---|---|---|---|
 | **Attacker** | Kali Linux | `192.168.50.10` | Penetration testing and analysis |
-| **IoT Services** | Ubuntu Desktop 22.04 | `192.168.50.20` | RTSP camera, MQTT broker, Node-RED, smart-light and smart-vacuum simulator |
-| **IoT Lock** | Debian 12 | `192.168.50.30` | Virtual BLE controllers and HackMeLock |
+| **IoT Services** | Ubuntu Desktop 22.04 | `192.168.50.20` | RTSP camera, MQTT broker, Node-RED, Bluetooth lock, smart-light and smart-vacuum simulator |
 
 All VMs communicate through the isolated VMware LAN Segment:
 
