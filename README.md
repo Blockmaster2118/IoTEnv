@@ -2,28 +2,34 @@
 
 A self-contained, isolated IoT security testing environment designed for demonstrating common IoT vulnerabilities and attack paths in a controlled virtualised network.
 
-The lab uses intentionally vulnerable IoT services and simulated devices, including an RTSP camera, MQTT smart light, MQTT smart Vacuum and BLE smart lock. Everything runs inside VMware and is isolated from real networks.
+The lab uses intentionally vulnerable IoT services and simulated devices, including an RTSP camera, MQTT smart light, MQTT smart vacuum and smart lock. Everything runs inside VMware and is isolated from real networks.
 
 ## Architecture
 
 | VM | OS | IP | Purpose |
 |---|---|---|---|
 | **Attacker** | Kali Linux | `192.168.50.10` | Penetration testing and analysis |
-| **IoT Services** | Ubuntu Desktop 22.04 | `192.168.50.20` | RTSP camera, MQTT broker, Node-RED, Bluetooth lock, smart-light and smart-vacuum simulator |
+| **IoT Services** | Ubuntu Desktop 22.04 | `192.168.50.20` | RTSP camera, MQTT broker, Node-RED, smart-light, smart-vacuum and smart-lock simulators |
 
 All VMs communicate through the isolated VMware LAN Segment:
 
 ```text
                     iotlab LAN Segment
-                           │
-          ┌────────────────┼────────────────┐
-          │                │                │
-     Kali Linux       IoT Services       IoT Lock
-    192.168.50.10     192.168.50.20     192.168.50.30
-          │                │                │
-       Attacker       RTSP / MQTT       BLE Lock
-        Tools         Smart Light       Simulator
-                       + Vacuum
+                           |
+                 ┌─────────┴─────────┐
+                 |                   |
+            Kali Linux          IoT Services
+           192.168.50.10       192.168.50.20
+                 |                   |
+              Attacker        ┌──────┼────────┐
+               Tools          |      |        |
+                             RTSP   MQTT   Smart Lock
+                            Camera  Broker  TCP :9999
+                                      |
+                                ┌─────┴─────┐
+                                |           |
+                           Smart Light  Smart Vacuum
+                            Simulator    Simulator
 ```
 
 The lab network is intentionally isolated from the host's real LAN and the Internet.
@@ -51,6 +57,7 @@ Ubuntu Desktop hosts the main IoT services using Docker:
 - **Node-RED** - smart-home dashboard
 - **Smart Light Simulator** - Python/Tkinter MQTT-controlled device
 - **Smart Vacuum Simulator** - Python MQTT based C2 link
+- **Smart Lock Simulator** - Python based lock utilizing a static token
 
 The camera feed, smart-light and smart-vacuum interface provide visible demonstrations of attacks against IoT services.
 
@@ -66,14 +73,9 @@ The camera feed, smart-light and smart-vacuum interface provide visible demonstr
 
 ![Light View](./Images/light_view.png)
 
-### IoT Lock VM
-Debian hosts:
+#### Lock View:
 
-- Virtual Bluetooth HCI controllers
-- HackMeLock BLE smart-lock simulator
-- GATTacker for BLE security testing
-
-No physical Bluetooth hardware is required.
+_[TODO]_
 
 ## Network Setup
 
@@ -98,9 +100,26 @@ docker compose up -d
 python3 ~/iot-lab/smart_light.py &
 ffplay -rtsp_transport tcp rtsp://127.0.0.1:8554/cam
 python3 ~/iot-lab/smart_vacuum.py
+python3 ~/iot-lab/smart_lock.py
 ```
 
 The Docker stack provides the RTSP and MQTT services, while the smart-light simulator provides a visible MQTT-controlled device.
+
+### Smart Lock Controls
+
+The lock's intended client is `lock_client.py`
+
+**Unlock:** 
+
+```bash
+python3 ~/iot-lab/lock_client.py unlock
+```
+
+**Lock:**
+
+```bash
+python3 ~/iot-lab/lock_client.py lock
+```
 
 ## Verification
 
@@ -109,18 +128,17 @@ From the Kali VM:
 ```bash
 nmap -sn 192.168.50.0/24
 
-nmap -sV -p 8554,1883,1880 192.168.50.20
+nmap -sV -p 8554,1883,1880,9999 192.168.50.20
 
 mosquitto_sub -h 192.168.50.20 -t '#' -v
 
 ffprobe rtsp://admin:12345@192.168.50.20:8554/cam
 ```
 
-The expected hosts are:
+The expected host is:
 
 ```text
 192.168.50.20  IoT Services
-192.168.50.30  IoT Lock
 ```
 
 Successful host discovery and service checks indicate that the lab is ready for penetration-testing exercises.
@@ -180,6 +198,25 @@ mosquitto_pub \
 ```
 
 _(NOTE: speeds include: `SLOW`, `NORMAL`, `FAST`)_
+
+### Smart Lock:
+
+#### Toggle:
+
+```bash
+python3 lock_replay.py 192.168.50.20 "UNLOCK:1234"
+```
+
+_(NOTE: `UNLOCK` can be replaced with `LOCK`)_
+
+#### Denial of Entry:
+
+```bash
+./DoE.sh
+```
+
+This attack will loop the previous force lock attack every 2 seconds to deny area entry.
+
 
 
 ## Credentials
